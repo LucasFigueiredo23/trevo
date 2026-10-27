@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "public/404.html"
+        ],
+        "createdAt": "2026-10-27T21:13:27.217Z",
+        "reason": "Claude: falso positivo — texto #b9addb e #efeaff sobre fundo #140a33 (≈8.6:1 e ≈16:1); o detector lê as manchas rgba translúcidas do radial-gradient como cor sólida de fundo"
+      },
+      {
+        "rule": "marquee",
+        "value": "*",
+        "files": [
+          "public/index.html"
+        ],
+        "createdAt": "2026-10-27T21:23:00.542Z",
+        "reason": "Claude: as fitas de gêneros já existiam antes desta sessão e são parte intencional do visual; respeitam prefers-reduced-motion e o conteúdo está no aria-label da seção. Ofereci ao usuário deixá-las paradas três vezes e ele não pediu mudança (não confirmou explicitamente)."
+      }
+    ]
+  }
+}
