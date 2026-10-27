@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Trevo Fest 2026 — 21 de novembro em Santa Maria do Pará</title>
 <meta name="description" content="Trevo Fest: eletrônica, eletrofunk, funk e submundo numa noite imersiva de som pesado e luzes surreais. Sábado, 21 de novembro, no Arenas Club, Santa Maria do Pará.">
 <meta property="og:type" content="website">
@@ -314,6 +314,21 @@
   footer a{text-decoration:none}
   footer a:hover{color:var(--nevoa)}
 
+  /* ========== BARRA DE COMPRA (só no celular) ========== */
+  .buybar{display:none}
+  @media (max-width:520px){
+    .buybar{
+      display:block; position:fixed; inset:auto 0 0 0; z-index:45;
+      padding:28px var(--gutter) calc(14px + env(safe-area-inset-bottom));
+      background:linear-gradient(to bottom, transparent, rgba(20,10,51,.92) 45%);
+      transform:translateY(110%); visibility:hidden;
+      transition:transform .35s cubic-bezier(.2,.8,.2,1), visibility .35s;
+    }
+    .buybar.is-visible{transform:none; visibility:visible}
+    .buybar .btn{width:100%; justify-content:center}
+    footer{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+  }
+
   /* ========== RESPONSIVO ========== */
   @media (max-width:900px){
     .about__grid{grid-template-columns:1fr}
@@ -491,6 +506,11 @@
   </section>
 </main>
 
+<!-- Botão fixo no rodapé da tela (celular): aparece quando os botões do hero saem de vista -->
+<div class="buybar" id="buybar">
+  <a class="btn" href="https://shotgun.live/pt-br/festivals/trevo-fest-trevo-produtora?ids=1857120" target="_blank" rel="noopener">Comprar ingresso</a>
+</div>
+
 <footer>
   <div class="wrap">
     <span>Trevo Fest 2026, uma realização Trevo Produtora</span>
@@ -554,6 +574,19 @@
     } else {
       nav.classList.add("show-brand");
     }
+  })();
+
+  // Barra de compra no celular: some enquanto outro botão de compra já está na tela
+  (function(){
+    const bar = document.getElementById("buybar");
+    const alvos = [document.querySelector(".hero__ctas"), document.querySelector(".final .btn")];
+    if (!("IntersectionObserver" in window)){ bar.classList.add("is-visible"); return; }
+    const vistos = new Set();
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting ? vistos.add(e.target) : vistos.delete(e.target));
+      bar.classList.toggle("is-visible", vistos.size === 0);
+    });
+    alvos.forEach(a => io.observe(a));
   })();
 </script>
 </body>
